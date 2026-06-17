@@ -24,7 +24,7 @@ Una aplicación web moderna para explorar el multiverso de Rick y Morty. Desarro
 
 1.  **Clona el repositorio:**
 
-Repositorio: [https://github.com/sacordovap/ricky-and-morty_react.git](https://github.com/sacordovap/ricky-and-morty_react.git)
+Repositorio: [https://github.com/sacordovap/rick-and-morty_react.git](https://github.com/sacordovap/rick-and-morty_react.git)
 
 ```bash
   git clone https://github.com/sacordovap/ricky-and-morty_react.git
