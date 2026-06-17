@@ -9,14 +9,16 @@ export const useCharacterStore = create((set, get) => ({
   isLoading: false,
 
   fetchCharacters: async (page = 1) => {
-    // Si ya está cargando, evitamos peticiones duplicadas
+    
     if (get().isLoading) return;
     set({ isLoading: true, currentPage: page });
-    const { filters } = get();
+    const activeFilters = Object.fromEntries(
+      Object.entries(get().filters).filter(([_, v]) => v !== ""),
+    );
 
     try {
       const response = await api.get("/character/", {
-        params: { page, ...filters },
+        params: { page, ...activeFilters },
       });
       set({
         characters: response.data.results || [],
@@ -24,11 +26,17 @@ export const useCharacterStore = create((set, get) => ({
         isLoading: false,
       });
     } catch (error) {
+      console.error("Error fetching characters:", error);
       set({ characters: [], info: null, isLoading: false });
     }
   },
 
   fetchCharacterById: async (id) => {
+    const { selectedCharacter, isLoading } = get();
+    if (selectedCharacter && selectedCharacter.id === Number(id)) return;
+
+    if (isLoading) return;
+
     set({ isLoading: true });
     try {
       const response = await api.get(`/character/${id}`);
